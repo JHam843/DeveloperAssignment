@@ -1,0 +1,14 @@
+﻿@using DeveloperAssignment.Extensions
+@model IEnumerable<DeveloperAssignment.Models.Child>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+
+    @Html.RenderButton("Submit", "btn btn-success", "submit", new { id = "submitButton" })
+    <br/>
+    
+</div>
