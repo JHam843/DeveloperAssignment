@@ -1,5 +1,6 @@
 ﻿using DeveloperAssignment.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperAssignment.Controllers
 {
@@ -73,12 +74,20 @@ namespace DeveloperAssignment.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Update(child);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Update(child);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes due to concurrency conflict.");
+                }
             }
             return View(child);
         }
+
 
         // Show delete confirmation
         public IActionResult Delete(int id)
